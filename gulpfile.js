@@ -34,6 +34,6 @@ gulp.task('default', [ 'bundle' ])
 
 gulp.task('watch', function() {
     return watch('src/**/*.@(js|jsx)', function() {
-        runSequence('default');
+        return runSequence('default');
     });
 });
