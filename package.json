@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/zetkin/api-console",
   "dependencies": {
-    "react": "^0.13.1"
+    "flummox": "^3.5.1",
+    "react": "^0.13.1",
+    "superagent": "^1.1.0"
   },
   "devDependencies": {
     "browserify": "^9.0.8",
