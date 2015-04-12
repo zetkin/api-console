@@ -6,6 +6,8 @@ var runSequence = require('run-sequence');
 var rename = require('gulp-rename');
 var watch = require('gulp-watch');
 var babel = require('gulp-babel');
+var sass = require('gulp-sass');
+
 
 gulp.task('clean', function(cb) {
     return del([
@@ -14,7 +16,13 @@ gulp.task('clean', function(cb) {
     ], cb);
 });
 
-gulp.task('build', function() {
+gulp.task('buildCss', function() {
+    return gulp.src('./src/scss/**/*.scss')
+        .pipe(sass())
+        .pipe(gulp.dest('./static/css'));
+});
+
+gulp.task('buildJs', function() {
     return gulp.src('./src/js/**/*.@(jsx|js)')
         .pipe(babel())
         .pipe(rename(function(path) {
@@ -23,17 +31,21 @@ gulp.task('build', function() {
         .pipe(gulp.dest('./.build'))
 });
 
-gulp.task('bundle', [ 'build' ], function() {
+gulp.task('bundleJs', [ 'buildJs' ], function() {
     return browserify('./.build/main.js')
         .bundle()
         .pipe(source('main.js'))
         .pipe(gulp.dest('./static/js'))
 });
 
-gulp.task('default', [ 'bundle' ])
+gulp.task('default', [ 'bundleJs', 'buildCss' ])
 
 gulp.task('watch', function() {
-    return watch('src/**/*.@(js|jsx)', function() {
-        return runSequence('default');
+    watch('src/js/**/*.@(js|jsx)', function() {
+        return runSequence('bundleJs');
+    });
+
+    watch('src/scss/**/*.scss', function() {
+        return runSequence('buildCss');
     });
 });
