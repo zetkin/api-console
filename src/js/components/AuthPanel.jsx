@@ -14,7 +14,9 @@ export default class AuthPanel extends FluxComponent {
         if (sessionStore.isAuthenticated()) {
             return (
                 <div className="auth-panel">
-                    Logged in as { sessionStore.getUsername() } with token { sessionStore.getToken() }.
+                    <p>
+                    Logged in as <em>{ sessionStore.getUsername() }</em> with token <em>{ sessionStore.getToken() }</em>.
+                    </p>
                     <input type="button" value="Log out" onClick={ this.onClickLogout.bind(this) }/>
                 </div>
             )
