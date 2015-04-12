@@ -15,7 +15,7 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('build', function() {
-    return gulp.src('./src/**/*.@(jsx|js)')
+    return gulp.src('./src/js/**/*.@(jsx|js)')
         .pipe(babel())
         .pipe(rename(function(path) {
             path.extname = '.js';
