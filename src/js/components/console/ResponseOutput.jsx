@@ -17,9 +17,7 @@ export default class ResponseOutput extends FluxComponent {
     }
 
     render() {
-        var body = JSON.stringify(this.state.lastResponseBody);
-
-        console.log(body);
+        var body = JSON.stringify(this.state.lastResponseBody, null, 2);
 
         return (
             <div className="response-output">
