@@ -30,6 +30,7 @@ export default class RequestInput extends FluxComponent {
 
                 <input ref="path" type="text"
                     placeholder="Request path?and=params"
+                    onKeyUp={ this.onKeyUp.bind(this) }
                     defaultValue={ this.state.lastRequestPath }/>
 
                 <textarea ref="body" placeholder="Request body"
@@ -38,6 +39,12 @@ export default class RequestInput extends FluxComponent {
                 <input type="button" value="Execute" onClick={ this.onClickExecute.bind(this) }/>
             </div>
         );
+    }
+
+    onKeyUp(ev) {
+        if (ev.keyCode == 13) {
+            this.onClickExecute(ev);
+        }
     }
 
     onClickExecute(ev) {
