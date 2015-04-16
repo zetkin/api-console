@@ -8,9 +8,9 @@ export default class RequestInput extends FluxComponent {
         super();
 
         this.state = {
-            lastRequestMethod: 'get',
-            lastRequestPath: '',
-            lastRequestBody: ''
+            method: '',
+            path: '',
+            body: ''
         };
     }
 
@@ -21,7 +21,9 @@ export default class RequestInput extends FluxComponent {
     render() {
         return (
             <div className="request-input">
-                <select ref="method" defaultValue={ this.state.lastRequestMethod }>
+                <select ref="method" value={ this.state.method }
+                    onChange={ this.onChangeMethod.bind(this) }>
+
                     <option value="get">GET</option>
                     <option value="post">POST</option>
                     <option value="del">DELETE</option>
@@ -30,11 +32,13 @@ export default class RequestInput extends FluxComponent {
 
                 <input ref="path" type="text"
                     placeholder="Request path?and=params"
+                    onChange={ this.onChangePath.bind(this) }
                     onKeyUp={ this.onKeyUp.bind(this) }
-                    defaultValue={ this.state.lastRequestPath }/>
+                    value={ this.state.path }/>
 
                 <textarea ref="body" placeholder="Request body"
-                    defaultValue={ this.state.lastRequestBody }/>
+                    onChange={ this.onChangeBody.bind(this) }
+                    value={ this.state.body }/>
 
                 <input type="button" value="Execute" onClick={ this.onClickExecute.bind(this) }/>
             </div>
@@ -47,6 +51,24 @@ export default class RequestInput extends FluxComponent {
         }
     }
 
+    onChangeMethod(ev) {
+        this.setState({
+            method: ev.target.value
+        });
+    }
+
+    onChangePath(ev) {
+        this.setState({
+            path: ev.target.value
+        });
+    }
+
+    onChangeBody(ev) {
+        this.setState({
+            body: ev.target.value
+        });
+    }
+
     onClickExecute(ev) {
         this.getActions('api').makeRequest({
             method: this.refs.method.getDOMNode().value,
@@ -55,14 +77,14 @@ export default class RequestInput extends FluxComponent {
         });
     }
 
-    onStoreChange() {
+    onStoreChange(ev) {
         var lastRequest = this.getStore('api').getLastRequest();
 
         if (lastRequest) {
             this.setState({
-                lastRequestPath: lastRequest.path,
-                lastRequestBody: lastRequest.body,
-                lastRequestMethod: lastRequest.method
+                method: lastRequest.method,
+                path: lastRequest.path,
+                body: lastRequest.body
             });
         }
     }

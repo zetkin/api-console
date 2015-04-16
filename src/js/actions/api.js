@@ -24,4 +24,8 @@ export default class ApiActions extends Actions {
             zetkin.req(payload.method, payload.path, headers, payload.body, resolve);
         });
     }
+
+    selectHistoricApiCall(index) {
+        return index;
+    }
 }

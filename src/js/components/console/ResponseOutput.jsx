@@ -1,27 +1,18 @@
 import React from 'react/addons';
 import TreeView from 'react-tree-component';
 
-import FluxComponent from '../FluxComponent';
 import TabPanel from '../misc/TabPanel';
 import { Tab } from '../misc/TabPanel';
 
 
-export default class ResponseOutput extends FluxComponent {
-    constructor() {
-        super();
-
-        this.state = {
-            lastResponseBody: ''
-        };
-    }
-
-    componentDidMount() {
-        this.listenTo('api', this.onStoreChange);
-    }
-
+export default class ResponseOutput extends React.Component {
     render() {
-        var bodyData = this.state.lastResponseBody;
+        var bodyData = this.props.response;
         var bodyString = JSON.stringify(bodyData, null, 2);
+
+        if (!bodyData) {
+            bodyData = {};
+        }
 
         return (
             <div className="response-output">
@@ -35,11 +26,5 @@ export default class ResponseOutput extends FluxComponent {
                 </TabPanel>
             </div>
         );
-    }
-
-    onStoreChange() {
-        this.setState({
-            lastResponseBody: this.getStore('api').getLastResponse()
-        });
     }
 }

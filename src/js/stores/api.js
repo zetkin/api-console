@@ -7,28 +7,47 @@ export default class ApiStore extends Store {
 
         this.setState({
             requestInProgress: false,
-            lastRequest: null,
+            history: [],
+            selectedHistoryIndex: -1,
             lastResponse: null
         });
 
         var apiActions = flux.getActions('api');
+        this.register(apiActions.selectHistoricApiCall, this.onSelectApiCall);
         this.registerAsync(apiActions.makeRequest,
             this.onRequestBegin,
             this.onRequestComplete);
     }
 
+    getHistory() {
+        return this.state.history;
+    }
+
     getLastRequest() {
-        return this.state.lastRequest;
+        if (this.state.selectedHistoryIndex >= 0 &&
+                this.state.selectedHistoryIndex < this.state.history.length) {
+
+            return this.state.history[this.state.selectedHistoryIndex];
+        }
     }
 
     getLastResponse() {
         return this.state.lastResponse;
     }
 
+    onSelectApiCall(index) {
+        this.setState({
+            selectedHistoryIndex: index,
+            lastResponse: null
+        });
+    }
+
     onRequestBegin(payload) {
+        var history = this.state.history.concat([ payload ]);
         this.setState({
             requestInProgress: true,
-            lastRequest: payload,
+            history: history,
+            selectedHistoryIndex: history.length - 1,
             lastResponse: null
         });
     }
