@@ -1,6 +1,8 @@
 import React from 'react/addons';
+import TreeView from 'react-tree-component';
 
 import FluxComponent from '../FluxComponent';
+import TabPanel from '../misc/TabPanel';
 
 
 export default class ResponseOutput extends FluxComponent {
@@ -17,11 +19,19 @@ export default class ResponseOutput extends FluxComponent {
     }
 
     render() {
-        var body = JSON.stringify(this.state.lastResponseBody, null, 2);
+        var bodyData = this.state.lastResponseBody;
+        var bodyString = JSON.stringify(bodyData, null, 2);
 
         return (
             <div className="response-output">
-                <textarea readOnly={ true } value={ body }/>
+                <TabPanel>
+                    <TabPanel.Tab tabTitle="Tree">
+                        <TreeView data={ bodyData }/>
+                    </TabPanel.Tab>
+                    <TabPanel.Tab tabTitle="Text">
+                        <textarea readOnly={ true } value={ bodyString }/>
+                    </TabPanel.Tab>
+                </TabPanel>
             </div>
         );
     }

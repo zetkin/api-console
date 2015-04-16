@@ -89,12 +89,40 @@ input[type=button] {
 }
 
 .response-output {
+    position: relative;
     float: right;
     width: 49%;
 
     textarea {
-        width: 100%;
+        width: 98%;
         height: 400px;
         margin: 0;
+    }
+
+    .treeview-label {
+        &:after {
+            content: ": ";
+        }
+    }
+}
+
+.tabpanel-tabs {
+    margin: 0;
+    padding: 5px 0;
+    position: absolute;
+    top: -19px;
+    right: 0;
+
+    li {
+        float: left;
+        display: block;
+        list-style-type: none;
+        padding: 0 0 0 3px;
+
+        cursor: pointer;
+
+        color: #666;
+        font-size: 10px;
+        text-decoration: underline;
     }
 }
