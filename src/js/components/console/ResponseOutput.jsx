@@ -3,6 +3,7 @@ import TreeView from 'react-tree-component';
 
 import FluxComponent from '../FluxComponent';
 import TabPanel from '../misc/TabPanel';
+import { Tab } from '../misc/TabPanel';
 
 
 export default class ResponseOutput extends FluxComponent {
@@ -25,12 +26,12 @@ export default class ResponseOutput extends FluxComponent {
         return (
             <div className="response-output">
                 <TabPanel>
-                    <TabPanel.Tab tabTitle="Tree">
+                    <Tab tabTitle="Tree">
                         <TreeView data={ bodyData }/>
-                    </TabPanel.Tab>
-                    <TabPanel.Tab tabTitle="Text">
+                    </Tab>
+                    <Tab tabTitle="Text">
                         <textarea readOnly={ true } value={ bodyString }/>
-                    </TabPanel.Tab>
+                    </Tab>
                 </TabPanel>
             </div>
         );
