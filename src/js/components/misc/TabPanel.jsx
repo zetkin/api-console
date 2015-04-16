@@ -64,6 +64,6 @@ export class Tab extends React.Component {
 }
 
 Tab.propTypes = {
-    selected: React.PropTypes.boolean,
+    selected: React.PropTypes.bool,
     tabTitle: React.PropTypes.string.isRequired
 };
