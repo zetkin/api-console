@@ -18,7 +18,7 @@ export default class SessionActions extends Actions {
         }
 
         return new Promise(function(resolve, reject) {
-            zetkin.req('POST', '/auth/session', headers, null, resolve);
+            zetkin.req('POST', '/session', headers, null, resolve);
         });
     }
 
@@ -30,7 +30,7 @@ export default class SessionActions extends Actions {
         }
 
         return new Promise(function(resolve, reject) {
-            zetkin.req('DEL', '/auth/session', headers, null, resolve);
+            zetkin.req('DEL', '/session', headers, null, resolve);
         });
     }
 }
