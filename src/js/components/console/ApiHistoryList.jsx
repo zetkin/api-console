@@ -19,9 +19,16 @@ export default class ApiHistoryList extends FluxComponent {
 
     render() {
         var apiActions = this.getActions('api');
+        var clearButton = null;
+
+        if (this.state.history.length > 0) {
+            clearButton = <input type="button" value="Clear"
+                onClick={ this.onClearClick.bind(this) }/>;
+        }
 
         return (
-            <ul className="apihistory">
+            <div className="apihistory">
+                <ul>
                 {this.state.history.map(function(request, index) {
                     var onClick = function(ev) {
                         apiActions.selectHistoricApiCall(index);
@@ -34,8 +41,15 @@ export default class ApiHistoryList extends FluxComponent {
                         </li>
                     );
                 }, this)}
-            </ul>
+                </ul>
+                { clearButton }
+            </div>
         );
+    }
+
+    onClearClick() {
+        var apiActions = this.getActions('api');
+        apiActions.clearHistory();
     }
 
     onStoreChange() {

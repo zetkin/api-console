@@ -17,6 +17,7 @@ export default class ApiStore extends Store {
         var apiActions = flux.getActions('api');
         this.register(apiActions.selectHistoricApiCall, this.onSelectApiCall);
         this.register(apiActions.restoreHistory, this.onRestoreStoredHistory);
+        this.register(apiActions.clearHistory, this.onClearStoredHistory);
         this.registerAsync(apiActions.makeRequest,
             this.onRequestBegin,
             this.onRequestComplete);
@@ -67,6 +68,16 @@ export default class ApiStore extends Store {
             history = [];
         }
 
+        this.setState({
+            history: history,
+            selectedHistoryIndex: -1,
+            lastResponse: null
+        });
+    }
+
+    onClearStoredHistory() {
+        var history = [];
+        localStorage.setItem(HISTORY_STORE_NAME, history);
         this.setState({
             history: history,
             selectedHistoryIndex: -1,

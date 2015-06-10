@@ -32,4 +32,8 @@ export default class ApiActions extends Actions {
     restoreHistory() {
         return true;
     }
+
+    clearHistory() {
+        return true;
+    }
 }
