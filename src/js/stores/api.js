@@ -86,11 +86,11 @@ export default class ApiStore extends Store {
     }
 
     onRequestBegin(payload) {
-        var history = this.state.history.concat([ payload ]);
+        var history = [ payload ].concat(this.state.history);
         this.setState({
             requestInProgress: true,
             history: history,
-            selectedHistoryIndex: history.length - 1,
+            selectedHistoryIndex: 0,
             lastResponse: null
         });
 
