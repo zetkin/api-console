@@ -28,4 +28,8 @@ export default class ApiActions extends Actions {
     selectHistoricApiCall(index) {
         return index;
     }
+
+    restoreHistory() {
+        return true;
+    }
 }

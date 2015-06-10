@@ -1,6 +1,8 @@
 import { Store } from 'flummox';
 
 
+const HISTORY_STORE_NAME = 'apiCallHistory';
+
 export default class ApiStore extends Store {
     constructor(flux) {
         super();
@@ -14,6 +16,7 @@ export default class ApiStore extends Store {
 
         var apiActions = flux.getActions('api');
         this.register(apiActions.selectHistoricApiCall, this.onSelectApiCall);
+        this.register(apiActions.restoreHistory, this.onRestoreStoredHistory);
         this.registerAsync(apiActions.makeRequest,
             this.onRequestBegin,
             this.onRequestComplete);
@@ -35,9 +38,38 @@ export default class ApiStore extends Store {
         return this.state.lastResponse;
     }
 
+    hasStoredHistory() {
+        var json = localStorage.getItem(HISTORY_STORE_NAME);
+
+        if (history) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     onSelectApiCall(index) {
         this.setState({
             selectedHistoryIndex: index,
+            lastResponse: null
+        });
+    }
+
+    onRestoreStoredHistory() {
+        var history;
+        var json = localStorage.getItem(HISTORY_STORE_NAME);
+
+        try {
+            history = JSON.parse(json);
+        }
+        catch (e) {
+            history = [];
+        }
+
+        this.setState({
+            history: history,
+            selectedHistoryIndex: -1,
             lastResponse: null
         });
     }
@@ -50,6 +82,8 @@ export default class ApiStore extends Store {
             selectedHistoryIndex: history.length - 1,
             lastResponse: null
         });
+
+        localStorage.setItem(HISTORY_STORE_NAME, JSON.stringify(history));
     }
 
     onRequestComplete(payload) {

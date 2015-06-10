@@ -16,4 +16,5 @@ window.onload = function() {
     var flux = new Flux();
     var div = document.getElementById('ctr');
     React.render(<FluxComponent flux={ flux }><App/></FluxComponent>, div);
+    flux.getActions('api').restoreHistory();
 };
