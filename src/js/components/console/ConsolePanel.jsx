@@ -17,9 +17,9 @@ export default class ConsolePanel extends FluxComponent {
 
         return (
             <div className="console-panel">
-                <ApiHistoryList/>
                 <RequestInput defaultValues={ apiCall }/>
                 <ResponseOutput response={ response }/>
+                <ApiHistoryList/>
             </div>
         );
     }
