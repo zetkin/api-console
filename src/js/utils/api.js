@@ -21,6 +21,7 @@ export class ZetkinPlatform {
         var req = request[method.toLowerCase()](url)
 
         if (body) {
+            req.set('Content-Type', 'application/json')
             req.send(body)
         }
 
