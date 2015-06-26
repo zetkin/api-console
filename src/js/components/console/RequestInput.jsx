@@ -28,6 +28,7 @@ export default class RequestInput extends FluxComponent {
                     <option value="post">POST</option>
                     <option value="del">DELETE</option>
                     <option value="patch">PATCH</option>
+                    <option value="put">PUT</option>
                 </select>
 
                 <input ref="path" type="text"
