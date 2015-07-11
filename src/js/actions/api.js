@@ -1,6 +1,5 @@
 import { Actions } from 'flummox';
-
-import zetkin from '../utils/api';
+import Z from 'zetkin';
 
 
 export default class ApiActions extends Actions {
@@ -20,8 +19,40 @@ export default class ApiActions extends Actions {
             }
         }
 
+        var resource = Z.resource(payload.path);
+
         return new Promise(function(resolve, reject) {
-            zetkin.req(payload.method, payload.path, headers, payload.body, resolve);
+            var data = null;
+            var onComplete = function(success, data, statusCode) {
+                if (success) {
+                    resolve(data, statusCode);
+                }
+                else {
+                    reject(data, statusCode);
+                }
+            };
+
+            if (payload.body) {
+                data = JSON.parse(payload.body);
+            }
+
+            switch (payload.method) {
+                case 'get':
+                    resource.get(onComplete);
+                    break;
+                case 'put':
+                    resource.put(data, onComplete);
+                    break;
+                case 'post':
+                    resource.post(data, onComplete);
+                    break;
+                case 'patch':
+                    resource.patch(data, onComplete);
+                    break;
+                case 'delete':
+                    resource.del(onComplete);
+                    break;
+            }
         });
     }
 

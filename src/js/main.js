@@ -1,14 +1,15 @@
 import React from 'react/addons';
 import FluxComponent from 'flummox/component';
+import Z from 'zetkin';
 
 import Flux from './flux';
 import App from './components/App';
-import zetkin from './utils/api';
 
 
 window.onload = function() {
     // TODO: Don't hardcode this
-    zetkin.configure({
+    Z.configure({
+        ssl: false,
         host: '192.168.59.103',
         port: 8080
     });

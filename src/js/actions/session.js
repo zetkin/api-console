@@ -1,6 +1,5 @@
 import { Actions } from 'flummox';
-
-import zetkin from '../utils/api';
+import Z from 'zetkin';
 
 
 export default class SessionActions extends Actions {
@@ -10,15 +9,16 @@ export default class SessionActions extends Actions {
     }
 
     login(payload) {
-        var credentials = payload.username + ':' + payload.password;
-        var b64cred = new Buffer(credentials).toString('base64');
-
-        var headers = {
-            Authorization: 'Basic ' + b64cred
-        }
-
         return new Promise(function(resolve, reject) {
-            zetkin.req('POST', '/session', headers, null, resolve);
+            Z.authenticate(payload.username, payload.password,
+                function(success, data, statusCode) {
+                    if (success) {
+                        resolve(data, statusCode);
+                    }
+                    else {
+                        reject(data, statusCode);
+                    }
+                });
         });
     }
 

@@ -20,7 +20,7 @@
     "flummox": "^3.5.1",
     "react": "^0.13.1",
     "react-tree-component": "*",
-    "superagent": "^1.1.0"
+    "zetkin": "^0.1.1"
   },
   "devDependencies": {
     "browserify": "^9.0.8",
