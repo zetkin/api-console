@@ -13,7 +13,7 @@ export default class SessionStore extends Store {
 
         var sessionActions = flux.getActions('session');
         this.registerAsync(sessionActions.login, this.onLoginBegin, this.onLoginComplete);
-        this.registerAsync(sessionActions.logout, this.onLogoutBegin);
+        this.registerAsync(sessionActions.logout, this.onLogoutBegin, this.onLogoutComplete);
     }
 
     isAuthenticated() {
@@ -44,5 +44,10 @@ export default class SessionStore extends Store {
         this.setState({
             token: null
         });
+    }
+
+    onLogoutComplete() {
+        // TODO: Remove after finding better way to logout in action
+        Z.setToken(null);
     }
 }
