@@ -30,6 +30,8 @@ export default class ApiHistoryList extends FluxComponent {
             <div className="apihistory">
                 <ul>
                 {this.state.history.map(function(request, index) {
+                    if(!request){ return }
+
                     var onClick = function(ev) {
                         apiActions.selectHistoricApiCall(index);
                     };
