@@ -10,50 +10,25 @@ export default class ApiActions extends Actions {
     }
 
     makeRequest(payload) {
-        var headers = null;
-        var token = this.flux.getStore('session').getToken();
+        var resource = Z.resource(payload.path);
+        var data = null;
 
-        if (token) {
-            headers = {
-                Authorization: 'Zetkin-Token ' + token
-            }
+        if (payload.body) {
+            data = JSON.parse(payload.body);
         }
 
-        var resource = Z.resource(payload.path);
-
-        return new Promise(function(resolve, reject) {
-            var data = null;
-            var onComplete = function(success, data, statusCode) {
-                if (success) {
-                    resolve(data, statusCode);
-                }
-                else {
-                    reject(data, statusCode);
-                }
-            };
-
-            if (payload.body) {
-                data = JSON.parse(payload.body);
-            }
-
-            switch (payload.method) {
-                case 'get':
-                    resource.get(onComplete);
-                    break;
-                case 'put':
-                    resource.put(data, onComplete);
-                    break;
-                case 'post':
-                    resource.post(data, onComplete);
-                    break;
-                case 'patch':
-                    resource.patch(data, onComplete);
-                    break;
-                case 'delete':
-                    resource.del(onComplete);
-                    break;
-            }
-        });
+        switch (payload.method) {
+            case 'get':
+                return resource.get();
+            case 'put':
+                return resource.put(data);
+            case 'post':
+                return resource.post(data);
+            case 'patch':
+                return resource.patch(data);
+            case 'delete':
+                return resource.del();
+        }
     }
 
     selectHistoricApiCall(index) {

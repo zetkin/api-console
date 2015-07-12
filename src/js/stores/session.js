@@ -1,4 +1,5 @@
 import { Store } from 'flummox';
+import Z from 'zetkin';
 
 
 export default class SessionStore extends Store {
@@ -33,9 +34,9 @@ export default class SessionStore extends Store {
         });
     }
 
-    onLoginComplete(payload) {
+    onLoginComplete(data, statusCode) {
         this.setState({
-            token: payload.data.token
+            token: Z.getToken()
         });
     }
 
