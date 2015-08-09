@@ -26,3 +26,13 @@ python -m SimpleHTTPServer 3080
 ```
 
 This will serve the console on port 3080 of localhost. Browse to [http://localhost:3080](http://localhost:3080) to see the console in action.
+
+## Run in Docker
+
+If you don't want to run this on your host system:
+
+    cd env
+    ./up.sh
+
+Make sure you have the zetkin-platform running since the up.sh script will link the api-console to the api
+contianer.
