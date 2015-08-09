@@ -10,7 +10,7 @@ window.onload = function() {
     // TODO: Don't hardcode this
     Z.configure({
         ssl: false,
-        host: '192.168.59.103',
+        host: process.env.ZETKIN_API_SERVER,
         port: 8080
     });
 
