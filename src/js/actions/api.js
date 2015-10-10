@@ -26,7 +26,7 @@ export default class ApiActions extends Actions {
                 return resource.post(data);
             case 'patch':
                 return resource.patch(data);
-            case 'delete':
+            case 'del':
                 return resource.del();
         }
     }
