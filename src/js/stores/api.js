@@ -1,4 +1,5 @@
 import { Store } from 'flummox';
+import Z from 'zetkin';
 
 
 const HISTORY_STORE_NAME = 'apiCallHistory';
@@ -7,7 +8,12 @@ export default class ApiStore extends Store {
     constructor(flux) {
         super();
 
+        const apiCfgJson = localStorage.getItem('zetkinApiConfig');
+        const apiCfg = JSON.parse(apiCfgJson) || {};
+
         this.setState({
+            apiHost: apiCfg.host || window.location.hostname,
+            apiPort: apiCfg.port || window.location.port || 80,
             requestInProgress: false,
             history: [],
             selectedHistoryIndex: -1,
@@ -21,6 +27,12 @@ export default class ApiStore extends Store {
         this.registerAsync(apiActions.makeRequest,
             this.onRequestBegin,
             this.onRequestComplete);
+
+        Z.configure({
+            ssl: false,
+            host: this.state.apiHost,
+            port: this.state.apiPort
+        });
     }
 
     getHistory() {
