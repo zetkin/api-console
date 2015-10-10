@@ -55,7 +55,7 @@ export default class ApiHistoryList extends FluxComponent {
     }
 
     onStoreChange() {
-        var history = this.getStore('api').getHistory();
+        var history = this.getStore('api').getHistory() || [];
 
         this.setState({
             history: history,
