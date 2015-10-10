@@ -24,6 +24,7 @@ export default class ApiStore extends Store {
         this.register(apiActions.selectHistoricApiCall, this.onSelectApiCall);
         this.register(apiActions.restoreHistory, this.onRestoreStoredHistory);
         this.register(apiActions.clearHistory, this.onClearStoredHistory);
+        this.register(apiActions.configure, this.onConfigure);
         this.registerAsync(apiActions.makeRequest,
             this.onRequestBegin,
             this.onRequestComplete);
@@ -33,6 +34,14 @@ export default class ApiStore extends Store {
             host: this.state.apiHost,
             port: this.state.apiPort
         });
+    }
+
+    getAPIHost() {
+        return this.state.apiHost;
+    }
+
+    getAPIPort() {
+        return this.state.apiPort;
     }
 
     getHistory() {
@@ -85,6 +94,21 @@ export default class ApiStore extends Store {
             selectedHistoryIndex: -1,
             lastResponse: null
         });
+    }
+
+    onConfigure(payload) {
+        this.setState({
+            apiHost: payload.host,
+            apiPort: payload.port
+        });
+
+        Z.configure({
+            ssl: false,
+            host: payload.host,
+            port: payload.port
+        });
+
+        localStorage.setItem('zetkinApiConfig', JSON.stringify(payload));
     }
 
     onClearStoredHistory() {

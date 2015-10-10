@@ -31,6 +31,10 @@ export default class ApiActions extends Actions {
         }
     }
 
+    configure(host, port) {
+        return { host, port };
+    }
+
     selectHistoricApiCall(index) {
         return index;
     }
